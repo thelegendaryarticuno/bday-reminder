@@ -1,0 +1,28 @@
+<!-- templates/birthdays.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Birthdays</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <h1>Upcoming Birthdays</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Employee ID</th>
+            <th>Birth Date</th>
+        </tr>
+        {% for birthday in birthdays %}
+        <tr>
+            <td>{{ birthday[0] }}</td>
+            <td>{{ birthday[1] }}</td>
+            <td>{{ birthday[2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/">Back</a>
+</body>
+</html>
