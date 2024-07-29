@@ -18,11 +18,14 @@ def save_employee():
     name = request.form['name']
     employee_id = request.form['employee_id']
     birth_date = request.form['birth_date']
+    anniversary_date = request.form.get('anniversary_date', None)
     
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO employees (name, employee_id, birth_date) VALUES (%s, %s, %s)',
-                   (name, employee_id, birth_date))
+    cursor.execute(
+        'INSERT INTO employees (name, employee_id, birth_date, anniversary_date) VALUES (%s, %s, %s, %s)',
+        (name, employee_id, birth_date, anniversary_date)
+    )
     conn.commit()
     cursor.close()
     conn.close()
@@ -38,8 +41,10 @@ def birthdays():
     
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT name, employee_id, birth_date FROM employees WHERE DAYOFYEAR(birth_date) BETWEEN DAYOFYEAR(%s) AND DAYOFYEAR(%s) ORDER BY birth_date',
-                   (today, week_later))
+    cursor.execute(
+        'SELECT name, employee_id, birth_date FROM employees WHERE DAYOFYEAR(birth_date) BETWEEN DAYOFYEAR(%s) AND DAYOFYEAR(%s) ORDER BY birth_date',
+        (today, week_later)
+    )
     upcoming_birthdays = cursor.fetchall()
     cursor.close()
     conn.close()
